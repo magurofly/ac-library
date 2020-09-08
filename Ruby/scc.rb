@@ -15,7 +15,7 @@ class SCCGraph
 	# 強連結成分を成分ごとにトポロジカルソートして返す
 	# @complexity O(@n + @edges.size)
 	def scc
-		group_num, ids = scc_id
+		group_num, ids = scc_ids
 		counts = [0] * group_num
 		ids.each { |x| counts[x] += 1 }
 		groups = Array.new(group_num) { [] }
@@ -25,10 +25,8 @@ class SCCGraph
 
 	private
 
-	def scc_id
+	def scc_ids
 		start, elist = csr
-		p start
-		p elist
 		now_ord = group_num = 0
 		visited, low, ord, ids = [], [], [-1] * @n, []
 		dfs = ->(v) {
@@ -36,7 +34,7 @@ class SCCGraph
 			now_ord += 1
 			visited << v
 			(start[v]...start[v + 1]).each do |i|
-				to = elist[i][1]
+				to = elist[i]
 				low[v] = if ord[to] == -1
 					dfs.(to)
 					[low[v], low[to]].min

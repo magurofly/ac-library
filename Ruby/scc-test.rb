@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/practice2/submissions/16569175
+
 require "./scc.rb"
 
 n, m = gets.split.map &:to_i
@@ -8,7 +10,6 @@ m.times do
 end
 
 groups = g.scc
-p groups
 puts groups.size
 groups.each do |group|
   puts ([group.size] + group).join(" ")
